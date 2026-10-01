@@ -83,16 +83,22 @@ const plans: Plan[] = [
 const imageSources = {
   hero: {
     src: '/images/gym-hero.jpg',
+    avifSrcSet: '/images/gym-hero-720.avif 720w, /images/gym-hero-1200.avif 1200w',
+    sizes: '(max-width: 58rem) calc(100vw - 2rem), 50vw',
     alt: 'Athlete pressing a barbell overhead in a dimly lit gym.',
     href: 'https://unsplash.com/es/fotos/hombre-en-pantalones-negros-levantando-el-cuerpo-de-la-varilla-de-metal-uJxjimIRKlk',
   },
   programs: {
     src: '/images/gym-programs.jpg',
+    avifSrcSet: '/images/gym-programs-720.avif 720w, /images/gym-programs-1200.avif 1200w',
+    sizes: '(max-width: 58rem) calc(100vw - 2rem), 100vw',
     alt: 'Athlete preparing for a barbell squat in a gym.',
     href: 'https://unsplash.com/photos/a-man-squatting-on-a-bench-in-a-gym-XTktUgGYEkI',
   },
   visit: {
     src: '/images/gym-visit.jpg',
+    avifSrcSet: '/images/gym-visit-720.avif 720w, /images/gym-visit-1200.avif 1200w',
+    sizes: '(max-width: 58rem) calc(100vw - 2rem), 50vw',
     alt: 'Dark gym interior with strength-training equipment and exposed beams.',
     href: 'https://unsplash.com/pt-br/s/fotografias/gin%C3%A1sio-escuro',
   },
@@ -284,7 +290,10 @@ function App() {
             </div>
 
             <figure className="media-placeholder media-placeholder--image media-placeholder--hero">
-              <img className="media-placeholder__image" src={imageSources.hero.src} alt={imageSources.hero.alt} fetchPriority="high" />
+              <picture className="media-placeholder__picture">
+                <source type="image/avif" srcSet={imageSources.hero.avifSrcSet} sizes={imageSources.hero.sizes} />
+                <img className="media-placeholder__image" src={imageSources.hero.src} srcSet={`${imageSources.hero.src} 1800w`} sizes={imageSources.hero.sizes} alt={imageSources.hero.alt} fetchPriority="high" />
+              </picture>
               <span className="media-placeholder__shade" aria-hidden="true" />
               <span className="media-placeholder__index">[01]</span>
               <span className="media-placeholder__label">Training floor / NORTHLINE</span>
@@ -347,7 +356,10 @@ function App() {
             </div>
 
             <figure className="media-placeholder media-placeholder--image media-placeholder--wide">
-              <img className="media-placeholder__image" src={imageSources.programs.src} alt={imageSources.programs.alt} loading="lazy" />
+              <picture className="media-placeholder__picture">
+                <source type="image/avif" srcSet={imageSources.programs.avifSrcSet} sizes={imageSources.programs.sizes} />
+                <img className="media-placeholder__image" src={imageSources.programs.src} srcSet={`${imageSources.programs.src} 1800w`} sizes={imageSources.programs.sizes} alt={imageSources.programs.alt} loading="lazy" />
+              </picture>
               <span className="media-placeholder__shade" aria-hidden="true" />
               <span className="media-placeholder__index">[02]</span>
               <span className="media-placeholder__label">A practice you can see.</span>
@@ -436,7 +448,10 @@ function App() {
               </button>
             </div>
             <figure className="media-placeholder media-placeholder--image media-placeholder--visit">
-              <img className="media-placeholder__image" src={imageSources.visit.src} alt={imageSources.visit.alt} loading="lazy" />
+              <picture className="media-placeholder__picture">
+                <source type="image/avif" srcSet={imageSources.visit.avifSrcSet} sizes={imageSources.visit.sizes} />
+                <img className="media-placeholder__image" src={imageSources.visit.src} srcSet={`${imageSources.visit.src} 1800w`} sizes={imageSources.visit.sizes} alt={imageSources.visit.alt} loading="lazy" />
+              </picture>
               <span className="media-placeholder__shade" aria-hidden="true" />
               <span className="media-placeholder__index">[04]</span>
               <span className="media-placeholder__label">The room matters.</span>
