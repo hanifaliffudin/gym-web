@@ -14,6 +14,12 @@
       imagesrcset="/images/gym-hero-720.avif 720w, /images/gym-hero-1200.avif 1200w"
       imagesizes="(max-width: 58rem) calc(100vw - 2rem), 50vw"
     />
+    <style>
+      html { background: #0b0b0b; }
+      .critical-shell { min-height: 100vh; padding: 8rem max(1rem, 5vw); background: #0b0b0b; color: #f2ede4; }
+      .critical-shell p { max-width: 34rem; margin: 0 0 1.25rem; font: 600 0.8rem/1.4 ui-sans-serif, sans-serif; letter-spacing: 0.12em; text-transform: uppercase; }
+      .critical-shell h1 { max-width: 11ch; margin: 0; font: 800 clamp(3.5rem, 9vw, 8rem)/0.86 Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; letter-spacing: -0.06em; text-transform: uppercase; }
+    </style>
     <meta
       name="description"
       content="NORTHLINE is a dark performance training club concept for strength, conditioning, and focused weekly practice."
@@ -21,7 +27,12 @@
     <title>NORTHLINE | Training club concept</title>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div class="critical-shell">
+        <p>Training club concept / NORTHLINE</p>
+        <h1>Build a practice that stays with you.</h1>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
