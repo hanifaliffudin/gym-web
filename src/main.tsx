@@ -9,4 +9,4 @@ window.setTimeout(() => {
       <App />
     </StrictMode>,
   )
-}, 0)
+}, 100)
