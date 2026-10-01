@@ -4,7 +4,7 @@
   --surface-raised: #1c1c1b;
   --paper: #f2ede4;
   --muted: #aaa39a;
-  --quiet: #756f68;
+  --quiet: #aaa39a;
   --line: #3a3734;
   --accent: #f05b3f;
   --accent-soft: #ff836a;
@@ -490,6 +490,10 @@ h3 {
   background: var(--void);
 }
 
+.section--programs .program-detail .eyebrow {
+  color: var(--accent-soft);
+}
+
 .section--programs .program-tab__mark {
   color: #a93625;
 }
@@ -805,7 +809,7 @@ h3 {
 }
 
 .section--visit .visit-details dt {
-  color: #81786f;
+  color: #625d56;
 }
 
 .section--visit .media-placeholder {

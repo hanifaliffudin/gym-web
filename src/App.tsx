@@ -381,7 +381,7 @@ function App() {
             </div>
 
             <div className="plan-layout">
-              <div className="plan-list" role="list" aria-label="Membership plan options">
+              <div className="plan-list" role="group" aria-label="Membership plan options">
                 {plans.map((plan) => (
                   <button
                     key={plan.id}
@@ -474,29 +474,35 @@ function App() {
             ) : (
               <form className="visit-form" onSubmit={handleFormSubmit} noValidate>
                 <p className="dialog-intro">This form is local to the NORTHLINE concept. A live version would connect it to the gym inbox.</p>
-                <label>
+                <label htmlFor="visit-name">
                   Name
                   <input
+                    id="visit-name"
+                    name="name"
                     type="text"
                     value={formValues.name}
                     placeholder="Your name"
+                    autoComplete="name"
                     aria-invalid={formStatus === 'error' && !formValues.name.trim()}
                     onChange={(event) => updateFormValue('name', event.target.value)}
                   />
                 </label>
-                <label>
+                <label htmlFor="visit-email">
                   Email
                   <input
+                    id="visit-email"
+                    name="email"
                     type="email"
                     value={formValues.email}
                     placeholder="email@example.com"
+                    autoComplete="email"
                     aria-invalid={formStatus === 'error' && (!formValues.email.trim() || !/^\S+@\S+\.\S+$/.test(formValues.email))}
                     onChange={(event) => updateFormValue('email', event.target.value)}
                   />
                 </label>
-                <label>
+                <label htmlFor="visit-interest">
                   Training interest
-                  <select value={formValues.interest} onChange={(event) => updateFormValue('interest', event.target.value)}>
+                  <select id="visit-interest" name="interest" value={formValues.interest} onChange={(event) => updateFormValue('interest', event.target.value)}>
                     <option value="">Select an option</option>
                     <option value="program">Foundation program</option>
                     <option value="membership">Coached Week membership</option>
