@@ -2,7 +2,7 @@
 
 ## Design read
 
-Reading this as: a gym landing page for prospective members, in a dark performance editorial style, dial ENERGY 2 / RHYTHM 2 / MOTION 1.
+Reading this as: a gym landing page for prospective members, in a dark performance editorial style, dial ENERGY 2 / RHYTHM 2 / MOTION 2.
 
 ## Identity
 
@@ -29,6 +29,7 @@ Reading this as: a gym landing page for prospective members, in a dark performan
 - The hero is a split composition with one focal action and one moody free Unsplash image. The source link stays visible until the gym has its own licensed photography.
 - Program content uses a tabbed editorial split instead of a repeated feature-card grid.
 - Membership uses a selectable list with one detail panel instead of three equal pricing cards.
+- A concept-week schedule gives the program system a practical weekly rhythm without adding a generic feature grid.
 - The visit section closes with a clear next action and only real destinations.
 
 ## Imagery
@@ -45,5 +46,8 @@ Reading this as: a gym landing page for prospective members, in a dark performan
 
 ## Motion
 
-- MOTION 1 means hover, focus, and state transitions only.
-- No looping, bouncing, parallax, or scroll choreography is used.
+- MOTION 2 means a short hero entrance, one-time section reveals, restrained image movement, and state transitions that explain a change.
+- Scroll reveals are used to pace the long page. They do not hide content permanently and they stop after the section has appeared.
+- The active program and membership detail panels use a short content transition so the selected state feels connected to the new copy.
+- `prefers-reduced-motion` disables the choreography and leaves the content visible with near-instant state changes.
+- No looping, bouncing, parallax, or scroll hijacking is used.

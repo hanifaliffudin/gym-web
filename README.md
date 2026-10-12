@@ -8,9 +8,12 @@ Live site: [gym-web-seven-tawny.vercel.app](https://gym-web-seven-tawny.vercel.a
 
 - Split hero with a free Unsplash training image and visible source link.
 - Sticky responsive navigation with a mobile menu.
+- A concept-week schedule that gives each training block a place in the week.
 - Keyboard-accessible program tabs with arrow, Home, and End support.
 - Membership plan selector with an updating detail panel.
 - Request-a-visit modal with validation, loading, error, and local success states.
+- Restrained motion for the hero, section reveals, image frames, navigation, and changing detail panels.
+- Reduced-motion support that removes choreography while keeping all content and state changes available.
 - Responsive layouts for desktop, tablet, and narrow mobile screens.
 - Visible focus states, skip link, semantic landmarks, form labels, and accessible status messages.
 - Responsive AVIF image sources with JPEG fallbacks.

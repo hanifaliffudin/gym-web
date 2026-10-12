@@ -23,6 +23,12 @@ type Plan = {
   terms: string
 }
 
+type RhythmBlock = {
+  day: string
+  focus: string
+  detail: string
+}
+
 const programs: Program[] = [
   {
     id: 'strength',
@@ -80,6 +86,13 @@ const plans: Plan[] = [
   },
 ]
 
+const rhythmBlocks: RhythmBlock[] = [
+  { day: 'Mon', focus: 'Engine Room', detail: 'Intervals and carries to open the week.' },
+  { day: 'Tue', focus: 'Foundation', detail: 'Barbell and machine work with a coach.' },
+  { day: 'Thu', focus: 'Foundation', detail: 'A second strength session to build from.' },
+  { day: 'Sat', focus: 'Reset', detail: 'Mobility and range before the next cycle.' },
+]
+
 const imageSources = {
   hero: {
     src: '/images/gym-hero.jpg',
@@ -118,6 +131,7 @@ const initialFormValues: FormValues = {
 
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
   const [activeProgram, setActiveProgram] = useState<ProgramId>('strength')
   const [activePlan, setActivePlan] = useState<PlanId>('plan-one')
   const [modalOpen, setModalOpen] = useState(false)
@@ -138,6 +152,37 @@ function App() {
       firstNavLinkRef.current?.focus()
     }
   }, [mobileMenuOpen])
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 24)
+
+    handleScroll()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  useEffect(() => {
+    document.documentElement.classList.add('motion-ready')
+    const revealItems = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'))
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+      revealItems.forEach((item) => item.classList.add('is-visible'))
+      return
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return
+
+        entry.target.classList.add('is-visible')
+        observer.unobserve(entry.target)
+      })
+    }, { threshold: 0.14, rootMargin: '0px 0px -8% 0px' })
+
+    revealItems.forEach((item) => observer.observe(item))
+    return () => observer.disconnect()
+  }, [])
 
   useEffect(() => {
     if (modalOpen) {
@@ -234,7 +279,7 @@ function App() {
     <div className="site-shell">
       <a className="skip-link" href="#main-content">Skip to content</a>
 
-      <header className={`site-header${mobileMenuOpen ? ' is-open' : ''}`}>
+      <header className={`site-header${mobileMenuOpen ? ' is-open' : ''}${isScrolled ? ' is-scrolled' : ''}`}>
         <div className="container site-header__inner">
           <a className="wordmark" href="#top" onClick={() => setMobileMenuOpen(false)}>
             <span className="wordmark__name">NORTHLINE</span>
@@ -314,12 +359,12 @@ function App() {
               <span className="section-rule" />
               <p className="eyebrow">The work</p>
             </div>
-            <div className="section-heading__body">
+            <div className="section-heading__body" data-reveal>
               <h2 id="programs-title">Train around a reason.</h2>
               <p>Three ways into the week, each with a clear job.</p>
             </div>
 
-            <div className="program-layout">
+            <div className="program-layout" data-reveal>
               <div className="program-tabs" role="tablist" aria-label="Training programs">
                 {programs.map((program, index) => (
                   <button
@@ -327,6 +372,7 @@ function App() {
                     ref={(element) => { programTabRefs.current[index] = element }}
                     className={`program-tab${activeProgram === program.id ? ' is-active' : ''}`}
                     type="button"
+                    id={`program-tab-${program.id}`}
                     role="tab"
                     aria-selected={activeProgram === program.id}
                     aria-controls={`program-panel-${program.id}`}
@@ -341,8 +387,8 @@ function App() {
                 ))}
               </div>
 
-              <div className="program-detail" id={`program-panel-${selectedProgram.id}`} role="tabpanel" tabIndex={0}>
-                <div>
+              <div className="program-detail" id={`program-panel-${selectedProgram.id}`} role="tabpanel" tabIndex={0} aria-labelledby={`program-tab-${selectedProgram.id}`}>
+                <div className="program-detail__content" key={selectedProgram.id} aria-live="polite">
                   <p className="eyebrow">{selectedProgram.index} / {selectedProgram.label}</p>
                   <h3>{selectedProgram.title}</h3>
                   <p>{selectedProgram.description}</p>
@@ -355,7 +401,7 @@ function App() {
               </div>
             </div>
 
-            <figure className="media-placeholder media-placeholder--image media-placeholder--wide">
+            <figure className="media-placeholder media-placeholder--image media-placeholder--wide" data-reveal>
               <picture className="media-placeholder__picture">
                 <source type="image/avif" srcSet={imageSources.programs.avifSrcSet} sizes={imageSources.programs.sizes} />
                 <img className="media-placeholder__image" src={imageSources.programs.src} srcSet={`${imageSources.programs.src} 1800w`} sizes={imageSources.programs.sizes} alt={imageSources.programs.alt} loading="lazy" />
@@ -368,14 +414,28 @@ function App() {
           </div>
         </section>
 
-        <section className="statement-section" aria-labelledby="statement-title">
-          <div className="container statement-section__grid">
-            <p className="statement-section__index">02 / 04</p>
-            <div>
-              <h2 id="statement-title">The details make the difference.</h2>
-              <p>
-                Use this editorial break for the gym point of view, a short founder note, or a verified statement about the training environment.
-              </p>
+        <section className="rhythm-section" aria-labelledby="rhythm-title">
+          <div className="container rhythm-layout">
+            <div className="rhythm-intro" data-reveal>
+              <div className="section-heading">
+                <span className="section-index">02</span>
+                <span className="section-rule" />
+                <p className="eyebrow">Concept schedule</p>
+              </div>
+              <h2 id="rhythm-title">A week you can repeat.</h2>
+              <p>The hard work gets a place. The work between sessions gets one too.</p>
+            </div>
+            <div className="rhythm-list" aria-label="Concept weekly schedule">
+              {rhythmBlocks.map((block) => (
+                <article className="rhythm-row" key={block.day} data-reveal>
+                  <span className="rhythm-row__day">{block.day}</span>
+                  <div>
+                    <h3>{block.focus}</h3>
+                    <p>{block.detail}</p>
+                  </div>
+                  <span className="rhythm-row__mark" aria-hidden="true">↗</span>
+                </article>
+              ))}
             </div>
           </div>
         </section>
@@ -387,12 +447,12 @@ function App() {
               <span className="section-rule" />
               <p className="eyebrow">Membership</p>
             </div>
-            <div className="section-heading__body">
+            <div className="section-heading__body" data-reveal>
               <h2 id="plans-title">Choose the shape of your week.</h2>
               <p>Pick the amount of structure you want. Rates shown are concept pricing for this prototype.</p>
             </div>
 
-            <div className="plan-layout">
+            <div className="plan-layout" data-reveal>
               <div className="plan-list" role="group" aria-label="Membership plan options">
                 {plans.map((plan) => (
                   <button
@@ -410,19 +470,21 @@ function App() {
               </div>
 
               <article className="plan-detail">
-                <div className="plan-detail__topline">
+                <div className="plan-detail__content" key={selectedPlan.id} aria-live="polite">
+                  <div className="plan-detail__topline">
                   <p className="eyebrow">Selected option / {selectedPlan.index}</p>
                   <span className="plan-detail__status">Concept rate</span>
                 </div>
-                <h3>{selectedPlan.title}</h3>
-                <p>{selectedPlan.description}</p>
-                <dl className="placeholder-list placeholder-list--two-column">
-                  <div><dt>Price</dt><dd>{selectedPlan.price}</dd></div>
-                  <div><dt>Terms</dt><dd>{selectedPlan.terms}</dd></div>
-                </dl>
-                <button className="button button--accent" type="button" onClick={(event) => openModal(event.currentTarget)}>
-                  Ask about this option
-                </button>
+                  <h3>{selectedPlan.title}</h3>
+                  <p>{selectedPlan.description}</p>
+                  <dl className="placeholder-list placeholder-list--two-column">
+                    <div><dt>Price</dt><dd>{selectedPlan.price}</dd></div>
+                    <div><dt>Terms</dt><dd>{selectedPlan.terms}</dd></div>
+                  </dl>
+                  <button className="button button--accent" type="button" onClick={(event) => openModal(event.currentTarget)}>
+                    Ask about this option
+                  </button>
+                </div>
               </article>
             </div>
           </div>
@@ -430,7 +492,7 @@ function App() {
 
         <section className="section section--visit" id="visit" aria-labelledby="visit-title">
           <div className="container visit-layout">
-            <div className="visit-copy">
+            <div className="visit-copy" data-reveal>
               <div className="section-heading">
                 <span className="section-index">04</span>
                 <span className="section-rule" />
@@ -447,7 +509,7 @@ function App() {
                 Request a visit
               </button>
             </div>
-            <figure className="media-placeholder media-placeholder--image media-placeholder--visit">
+            <figure className="media-placeholder media-placeholder--image media-placeholder--visit" data-reveal>
               <picture className="media-placeholder__picture">
                 <source type="image/avif" srcSet={imageSources.visit.avifSrcSet} sizes={imageSources.visit.sizes} />
                 <img className="media-placeholder__image" src={imageSources.visit.src} srcSet={`${imageSources.visit.src} 1800w`} sizes={imageSources.visit.sizes} alt={imageSources.visit.alt} loading="lazy" />
